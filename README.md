@@ -138,60 +138,6 @@ Do not commit your local `.env`.
 
 The team uses one Atlas cluster so Join, Login, Directory, and Chat Publicly see the same `citizens` and `publicMessages`. You do **not** need MongoDB installed locally.
 
-Cluster: **ESNDirectory** (`esndirectory.whcddud.mongodb.net`)  
-Database: **`esn`**  
-Username: `junhaoya_db_user`  
-Password: `T1RsQaWvMTGnfHmQ`
-
-1. Copy `.env.template` to `.env` (PowerShell: `copy .env.template .env`).
-2. Paste this into `.env` (then add your own `JWT_SECRET`):
-
-```text
-PORT=3000
-MONGODB_URI=mongodb+srv://junhaoya_db_user:T1RsQaWvMTGnfHmQ@esndirectory.whcddud.mongodb.net/esn?retryWrites=true&w=majority&appName=ESNDirectory
-JWT_SECRET=<at least 32 random characters>
-```
-
-3. Set `JWT_SECRET` (each developer can use their own). Example: `openssl rand -hex 32`.
-4. Atlas **Network Access** must allow your IP (or `0.0.0.0/0` for the class project).
-5. Optional: Compass with the same `MONGODB_URI`; open database **`esn`**.
-
-To work offline instead, point `MONGODB_URI` at `mongodb://127.0.0.1:27017/esn` and run MongoDB Community locally. That database is only on your machine.
-
-Set `JWT_SECRET` before starting the server. The browser uses the Login-Logout API for authentication, directory refresh, logout, and presence heartbeat. Public Chat persists messages through the REST API and polls for new messages while the page is open.
-
-Start the application:
-
-```bash
-npm run dev
-```
-
-`npm start` runs the same server without auto-reload. After it starts, open [http://localhost:3000](http://localhost:3000). Choose **JOIN THE NETWORK** to open `/join-community`.
-
-The environment is ready when the Express server starts, `/api/health` reports `database: "connected"`, and the Join page loads in the browser. The REST API visualization is available at [http://localhost:3000/api-docs/](http://localhost:3000/api-docs/).
-
-### Open the REST API documentation
-
-1. Open a terminal in the repository root.
-2. Run `npm install` if the dependencies have not been installed.
-3. Make sure the local `.env` file contains the shared Atlas `MONGODB_URI` (and `JWT_SECRET`).
-4. Run `npm run dev` (or `npm start`).
-5. Open [http://localhost:3000/api-docs/](http://localhost:3000/api-docs/) in a browser. Swagger UI displays the endpoints grouped by use case; select an endpoint to view its request, response, and status-code details.
-6. Press `Ctrl+C` in the terminal to stop the server when finished.
-
-The machine-readable OpenAPI file is available in the running application at [http://localhost:3000/api-docs/openapi.yaml](http://localhost:3000/api-docs/openapi.yaml) and in the repository at [docs/openapi.yaml](docs/openapi.yaml).
-
-Run the tests with:
-
-```bash
-npm test
-```
-
-## Project Documents
-
-- REST API specification (Join Community, Login-Logout, Chat Publicly): start the application and open the local [Swagger UI](http://localhost:3000/api-docs/). The source specification is [docs/openapi.yaml](docs/openapi.yaml).
-- API change guidance for GitHub Copilot: [.github/copilot-instructions.md](.github/copilot-instructions.md)
-- Architecture: [docs/architecture.md](docs/architecture.md)
 
 ## Development Tools
 
